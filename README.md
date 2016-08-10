@@ -1,4 +1,4 @@
-E Dashboard
+GSE Dashboard
 
 GSE Dashboard is a people-to-task tracking tool written in Django. It has been written to work with:
   - Embedded database - SQLite3
