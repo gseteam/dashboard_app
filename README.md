@@ -34,8 +34,8 @@ Start the my-django-app server with a pre-existing SQLite3 database. This time, 
 ```sh
 $ docker run -v <some host directory>/db.sqlite3:/usr/src/app/db/db.sqlite3 -P -d my-django-app
 ```
-For each case above, check the host port that is mapped to the container's 8000 port.
-Then use "http://<host ip or hostname>:<host mapped port>/home" URL to access the tool.
+For each case above, once the container starts running, check the host port that is mapped to the container's 8000 port.
+Then use "http://host-ip:host-mapped-port/home" URL to access the tool.
 
 ### Todos
 
