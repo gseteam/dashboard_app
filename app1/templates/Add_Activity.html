@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
+  <style>
+   #abc{
+      min-width: 160px;
+      min-height: 160px;
+       margin-right:200px;
+
+       margin-bottom: 60px;
+      width: 200px;
+      }
+
+  .list{
+
+      margin-top: 20px;
+      margin-left:20px;
+  }
+   .dropdown{
+       margin-right:400px;
+       margin-bottom: 100px;
+       margin-top: 20px;
+  }
+  #header{
+  background-color:blue;
+  color: white;
+  }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color:white;
+}
+
+li {
+    display: block;
+    color: #000;
+   padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+
+ .active {
+    background-color: blue;
+    color: white;
+}
+
+li:HOVER:not(.active){
+    background-color: #555;
+    color: white;
+}
+#input{
+       margin-left: 600px;
+}
+      .alert-box { color:#555; border-radius:10px; font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px; padding:10px 10px 10px 36px; margin:10px 10px 0px; }
+            .alert-box span { font-weight:bold; text-transform:uppercase; }
+            .error { background:#ffecec; border:1px solid #f5aca6; }
+
+
+  </style>
+<script>
+    $(document).ready(function() {
+        //alert('i m here');
+    $.post({
+        url: "/getvalues",
+        data : {},
+        success : function(json) {
+			 //alert(json);
+
+	  		console.log(JSON.stringify(json));
+           //var t = JSON.stringify(json);
+		   var t= jQuery.parseJSON(JSON.stringify(json))
+			var arr=[];
+			for (var i in t){
+			  arr.push(t[i]);
+			}
+            arr.sort();
+			//alert(arr);
+			console.log(arr);
+			for (var j in arr){
+                $('#abc').append('<option>'+arr[j]+'</option>');
+           }
+
+		}
+    })
+
+} )
+
+</script>
+
+<script>
+    $(document).ready(function() {
+
+ $('#msgbx_err').css('display','none');
+      $('#save').click('click',function(){
+
+          $('#header').remove();
+          var name=$('#name').val();
+
+          var type=$('#type').val();
+    $.post({
+
+        url: "/activity_check_availability/"+name+"/"+type+"/",
+        data : {},
+        async: false,
+        success : function(json) {
+            //alert(json);
+            console.log(JSON.stringify(json));
+           //var t = JSON.stringify(json);
+            var t = jQuery.parseJSON(JSON.stringify(json))
+            var arr = [];
+            for (var i in t) {
+                arr.push(t[i]);
+            }
+            //alert(arr);
+            console.log(arr);
+            if (arr[0] == "1") {
+                $('#msgbx_err').css('display', 'block');
+                $('#name_status').html('ERROR:'+name+' is exists in database. please type another activity name');
+            }
+            else{
+                $('#msgbx_err').css('display', 'none');
+                 $('#name_status').html("");
+            }
+        }
+    })
+
+} )
+	} )
+    </script>
+    <script>
+     function checkfun() {
+            //alert("i m in fun");
+            var check=document.getElementById("name_status").innerHTML;
+            if (check){
+                return false
+            }
+
+            else{
+                return true;
+            }
+
+        }
+ </script>
+</head>
+
+<body  style="background-color:#337ab7">
+
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/home">GSE DASHBOARD</a>
+    </div>
+      </div>
+
+</nav>
+<form  method="post" onsubmit="return checkfun()">{% csrf_token %}
+
+<table align="center" width="80%" width="50%" height="100%"  style="background-color:#dcd6ff; border-color: transparent"  >
+    <tr>
+        <div class="list">
+        <td colspan="2" align="center" style="border-bottom: groove" height="10%">
+
+               <h2>Activity Information</h2>
+
+        </td>
+            </div>
+
+    </tr>
+    <tr>
+        <td align="left" valign="top" width="41%">
+            <div class="list">
+         <b>Activity Name:</b><br>
+    <input type="text" name="Activity_Name" id="name" required>
+    <div id="msgbx_err" class="alert-box error"><span id="name_status" ></span></div>
+            </div>
+        </td>
+
+        <td align="left" valign="top" width="41%" >
+            <div class="dropdown">
+         <b>Activity-Type:</b><br>
+  <select name="type" id="type" class="form-control" required>
+      <option >NFV</option>
+  <option>NON-NFV</option>
+  <option>MISC</option>
+</select>
+                </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" valign="top" width="41%">
+            <div class="list">
+         <b>Description:</b><br>
+    <textarea rows="4" cols="20" name="Description"  id="text" required>None
+</textarea>
+        </div>
+        </td>
+        <td align="left" valign="top" width="41%">
+            <div class="dropdown">
+         <b>Region:</b><br>
+  <select name="customer" class="form-control" required>
+      <option >APJ</option>
+      <option>China</option>
+      <option>EMEA</option>
+      <option>AMS</option>
+      <option>WW</option>
+
+
+  </select>
+                </div>
+        </td>
+    </tr>
+    <tr>
+    <td align="left" valign="top" width="41%"></td>
+    <td align="left" valign="top" width="41%">
+
+    <b>Add-people:</b><br>
+    <select name="Add_people" multiple id="abc" class="form-control">
+        <option selected>Add-people</option>
+    </select>
+
+    </td>
+
+    </tr>
+
+
+
+    <tr>
+        <td colspan="2">
+        <p align="center">
+        <input type="submit" id="save" value="Submit"class="btn btn-info pull-right" style="margin-right: 700px; margin-bottom: 40px"></tr>
+
+</table>
+</div>
+</form>
+</body>
+</html>

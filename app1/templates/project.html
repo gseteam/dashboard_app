@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>`
+  
+<title>Django</title>
+<script>
+$(function(){
+	$(".dropdown-menu > li > a.trigger").on("click",function(e) {
+		var current=$(this).next();
+		var grandparent=$(this).parent().parent();
+		if($(this).hasClass('left-caret')||$(this).hasClass('right-caret'))
+			$(this).toggleClass('right-caret left-caret');
+		grandparent.find('.left-caret').not(this).toggleClass('right-caret left-caret');
+		grandparent.find(".sub-menu:visible").not(current).hide();
+		current.toggle();
+		e.stopPropagation();
+	});
+	$(".dropdown-menu > li > a:not(.trigger)").on("click",function(){
+		var root=$(this).closest('.dropdown');
+		root.find('.left-caret').toggleClass('right-caret left-caret');
+		root.find('.sub-menu:visible').hide();
+	});
+});
+</script>
+
+<style>
+    #pop {
+width:100%;
+height:100%;
+opacity:.95;
+top:0;
+left:0;
+display:none;
+position:fixed;
+background-color:#313131;
+overflow:auto
+}
+#close {
+position:absolute;
+right:14px;
+top:14px;
+cursor:pointer;
+}
+div#popupContact {
+position:absolute;
+left:50%;
+top:17%;
+margin-left:-202px;
+font-family:'Raleway',sans-serif
+}
+form {
+max-width:300px;
+min-width:250px;
+    min-height: 300px;
+padding:10px 50px;
+border:2px solid gray;
+border-radius:10px;
+font-family:raleway;
+background-color:#fff
+}
+p {
+margin-top:30px
+}
+h2 {
+background-color:#FEFFED;
+padding:20px 35px;
+margin:-10px -50px;
+text-align:center;
+border-radius:10px 10px 0 0
+}
+hr {
+margin:10px -50px;
+border:0;
+border-top:1px solid #ccc
+}
+input[type=text] {
+width:82%;
+padding:10px;
+margin-top:30px;
+border:1px solid #ccc;
+padding-left:40px;
+font-size:16px;
+font-family:raleway
+}
+#name {
+background-repeat:no-repeat;
+background-position:5px 7px
+}
+
+textarea {
+background-repeat:no-repeat;
+background-position:5px 7px;
+width:82%;
+height:95px;
+padding:10px;
+resize:none;
+margin-top:30px;
+border:1px solid #ccc;
+padding-left:40px;
+font-size:16px;
+font-family:raleway;
+margin-bottom:30px
+}
+#submit {
+text-decoration:none;
+width:100%;
+text-align:center;
+display:block;
+background-color:#FFBC00;
+color:#fff;
+border:1px solid #FFCB00;
+padding:5px 0;
+    margin-top: 50px;
+font-size:20px;
+cursor:pointer;
+border-radius:5px
+}
+spans {
+color:red;
+font-weight:700
+}
+buttons {
+width:10%;
+height:45px;
+border-radius:3px;
+background-color:#cd853f;
+color:#fff;
+font-family:'Raleway',sans-serif;
+font-size:18px;
+cursor:pointer
+}
+
+.dropdown-menu>li
+{	position:relative;
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+	/* Rules below not implemented in browsers yet */
+	-o-user-select: none;
+	user-select: none;
+	cursor:pointer;
+}
+.dropdown-menu .sub-menu {
+    left: 100%;
+    position: absolute;
+    top: 0;
+    display:none;
+    margin-top: -1px;
+	border-top-left-radius:0;
+	border-bottom-left-radius:0;
+	border-left-color:#fff;
+	box-shadow:none;
+}
+.right-caret:after,.left-caret:after
+ {	content:"";
+    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
+    display: inline-block;
+    height: 0;
+    vertical-align: middle;
+    width: 0;
+	margin-left:5px;
+}
+.right-caret:after
+{	border-left: 5px solid #ffaf46;
+}
+.left-caret:after
+{	border-right: 5px solid #ffaf46;
+}
+
+.dropbtn {
+    background-color: black;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+.nfv_box{
+    width: 150px;
+    height: 30px;
+    text-align:center;
+    border-bottom: solid gray 1px;
+    display:inline-block;
+    margin-top: 10px;
+    margin-right: 400px;
+    margin-left: 20px;
+}
+    table {
+    border-collapse: collapse;
+
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+   #box{
+    background-color: #337ab7;
+    text-color: white;
+       padding: 11px 12px;
+       font-size: 14px;
+    width: 150px;
+        height:50px;
+    text-align: center;
+    margin-right:200px;
+       margin-left: 20px;
+
+    border: 1px solid transparent;
+        border-radius: 4px;
+
+}
+   #box:hover{
+background-color:#2e6da4;
+}
+    #box a{
+        text-decoration: none;
+        color: white;
+    }
+     #box1{
+    background-color:darkred;
+    text-color: white;
+    width: 150px;
+        height:50px;
+          padding: 11px 12px;
+       font-size: 14px;
+    text-align: center;
+    margin-right:200px;
+       margin-left: 20px;
+
+    border: 1px solid transparent;
+        border-radius: 4px;
+
+}
+   #box1:hover{
+background-color:red;
+}
+    #box1 a{
+        text-decoration: none;
+        color: white;
+    }
+     #box2{
+    background-color: darkorange;
+    text-color: white;
+    width: 150px;
+        height:50px;
+          padding: 11px 12px;
+       font-size: 14px;
+    text-align: center;
+    margin-right:200px;
+       margin-left: 20px;
+
+    border: 1px solid transparent;
+        border-radius: 4px;
+
+}
+   #box2:hover{
+background-color:orange;
+}
+    #box2 a{
+        text-decoration: none;
+        color: white;
+    }
+    #people_box a{
+        text-decoration: none;
+        color: white;
+    }
+    #people_box:hover{
+        background-color: green;
+    }
+ #people_box{
+
+    text-color: white;
+    width: 150px;
+        height:50px;
+   background-color:#3e8e41;
+      padding: 11px 12px;
+       font-size: 14px;
+    text-align: center;
+
+    border: 1px solid transparent;
+        border-radius: 4px;
+
+}
+
+
+{% for c in check %}
+</style>
+    <script>
+     	//Function To Display Popup
+	function div_show() {
+	document.getElementById('pop').style.display = "block";
+      var k=document.querySelector('option[value="{{ c }}"]').selected=true;
+
+        console.log(k)
+	}
+	//Function to Hide Popup
+	function div_hide(){
+	document.getElementById('pop').style.display = "none";
+	}
+</script>
+
+<script>
+    $(document).ready(function() {
+      $('#abc').one('click', function( onclick ){
+    $.post({
+        url: "/getvalues",
+        data : {},
+        success : function(json) {
+			 //alert(json);
+
+	  		console.log(JSON.stringify(json));
+
+
+           //var t = JSON.stringify(json);
+		   var t= jQuery.parseJSON(JSON.stringify(json))
+			var arr=[];
+			for (var i in t){
+			  arr.push(t[i]);
+			}
+            arr.sort();
+			//alert(arr);
+			console.log(arr);
+			for (var j in arr){
+                var k=arr[j];
+                $('#menu').append('<li><a href=\"people_detail/'+arr[j]+'\">'+arr[j]+'</a></li>');
+           }
+			
+		}
+    })
+	
+} )
+	} )
+</script>
+
+    <script>
+    $(document).ready(function() {
+
+      $('#nfv1').one('click', function( onclick ){
+    $.post({
+        url: "/gettype",
+        data : {},
+        success : function(json) {
+			 //alert(json);
+
+	  		console.log(JSON.stringify(json));
+           //var t = JSON.stringify(json);
+		   var t= jQuery.parseJSON(JSON.stringify(json))
+			var arr=[];
+			for (var i in t){
+			  arr.push(t[i]);
+			}
+            arr.sort();
+			//alert(arr);
+			console.log(arr);
+			for (var j in arr){
+                $('#nfv').append('<li><a href=\"activity_detail/'+arr[j]+'\">'+arr[j]+'</a></li>');
+           }
+
+		}
+    })
+
+} )
+	} )
+</script>
+    <script>
+    $(document).ready(function() {
+      $('#nonnfv1').one('click', function( onclick ){
+    $.post({
+        url: "/gettype1",
+        data : {},
+        success : function(json) {
+			 //alert(json);
+
+	  		console.log(JSON.stringify(json));
+           //var t = JSON.stringify(json);
+		   var t= jQuery.parseJSON(JSON.stringify(json))
+			var arr=[];
+			for (var i in t){
+			  arr.push(t[i]);
+			}
+            arr.sort();
+			//alert(arr);
+			console.log(arr);
+			for (var j in arr){
+                $('#nonnfv').append('<li><a href=\"activity_detail/'+arr[j]+'\">'+arr[j]+'</a></li>');
+           }
+
+		}
+    })
+
+} )
+	} )
+</script>
+    <script>
+    $(document).ready(function() {
+      $('#misc1').one('click', function( onclick ){
+    $.post({
+        url: "/gettype2",
+        data : {},
+        success : function(json) {
+			 //alert(json);
+
+	  		console.log(JSON.stringify(json));
+           //var t = JSON.stringify(json);
+		   var t= jQuery.parseJSON(JSON.stringify(json))
+			var arr=[];
+			for (var i in t){
+			  arr.push(t[i]);
+			}
+			//alert(arr);
+            arr.sort();
+			console.log(arr);
+			for (var j in arr){
+                $('#misc').append('<li><a href=\"activity_detail/'+arr[j]+'\">'+arr[j]+'</a></li>');
+           }
+
+		}
+    })
+
+} )
+	} )
+</script>
+     <script>
+    $(document).ready(function() {
+        $.post({
+            url: "/fronttype/NFV/",
+            data: {},
+            success: function (json) {
+                //alert(json);
+
+                console.log(JSON.stringify(json));
+                //var t = JSON.stringify(json);
+                var t = jQuery.parseJSON(JSON.stringify(json))
+                var arr = [];
+                for (var i in t) {
+                    arr.push(t[i]);
+                }
+                arr.sort();
+                //alert(arr);
+
+                console.log(arr);
+                for (var j in arr) {
+                    var row = $('<tr>')
+                    row.append('<td><div id="box"><a href=\"activity_detail/' + arr[j] + '\">' + arr[j] + '</a></div></td>');
+                    k=arr[j];
+                    $.post({
+                        url: "/frontpeopletype/"+arr[j]+"/",
+                        data: {},
+                        async: false,
+                        success: function (json) {
+                            //alert(json);
+
+                            console.log(JSON.stringify(json));
+                            //var t = JSON.stringify(json);
+                            var t = jQuery.parseJSON(JSON.stringify(json))
+                            var a = [];
+                            var cnt=[];
+                             for (var i in t) {
+                                cnt.push(t[i]);
+
+                            }
+
+                            for (var i in t) {
+                                a.push(i);
+
+                            }
+                            a.sort();
+
+                            for (var k in a) {
+
+                                if (cnt[k]>={{ c }})
+                                      row.append('<td><div id="people_box" style="background-color:red"><a href=\"people_detail/' + a[k] + '\">' + a[k] + '</td>');
+                                else
+                                        row.append('<td><div id="people_box"><a href=\"people_detail/' + a[k] + '\">' + a[k] + '</td>');
+
+
+                            }
+                        }
+                    })
+
+
+                    //$('#table').append('<tr><td><div id="box"><a href=\"activity_detail/' + arr[j] + '\">' + arr[j] + '</a></div></td></tr>');
+
+                    //for(var k in arr) {
+                    //$('#boxs').append('<div id="people_box">people1</div>');
+
+                    $('#table').append(row);
+
+
+                }
+
+
+            }
+        })
+
+    })
+</script>
+      <script>
+    $(document).ready(function() {
+        $.post({
+            url: "/fronttype/NON-NFV/",
+            data: {},
+            success: function (json) {
+                //alert(json);
+
+                console.log(JSON.stringify(json));
+                //var t = JSON.stringify(json);
+                var t = jQuery.parseJSON(JSON.stringify(json))
+                var arr = [];
+                for (var i in t) {
+                    arr.push(t[i]);
+                }
+                //alert(arr);
+                arr.sort();
+                console.log(arr);
+                for (var j in arr) {
+                    var row = $('<tr>')
+                    row.append('<td><div id="box1"><a href=\"activity_detail/' + arr[j] + '\">' + arr[j] + '</a></div></td>');
+                    k=arr[j];
+                    $.post({
+                        url: "/frontpeopletype/"+arr[j]+"/",
+                        data: {},
+                        async: false,
+                        success: function (json) {
+                            //alert(json);
+
+                            console.log(JSON.stringify(json));
+                            //var t = JSON.stringify(json);
+                            var t = jQuery.parseJSON(JSON.stringify(json))
+                            var a = [];
+                            var cnt=[];
+                             for (var i in t) {
+                                cnt.push(t[i]);
+
+                            }
+
+                            for (var i in t) {
+                                a.push(i);
+
+                            }
+                            a.sort();
+                            for (var k in a) {
+
+                                if (cnt[k]>={{ c }})
+                                      row.append('<td><div id="people_box" style="background-color:red"><a href=\"people_detail/' + a[k] + '\">' + a[k] + '</td>');
+                                else
+                                        row.append('<td><div id="people_box"><a href=\"people_detail/' + a[k] + '\">' + a[k] + '</td>');
+
+
+                            }
+                        }
+                    })
+
+
+                    //$('#table').append('<tr><td><div id="box"><a href=\"activity_detail/' + arr[j] + '\">' + arr[j] + '</a></div></td></tr>');
+
+                    //for(var k in arr) {
+                    //$('#boxs').append('<div id="people_box">people1</div>');
+
+                    $('#table1').append(row);
+
+
+                }
+
+
+            }
+        })
+
+    })
+</script>
+      <script>
+    $(document).ready(function(){
+
+        $.post({
+            url: "/fronttype/MISC/",
+            data: {},
+            success: function (json) {
+                //alert(json);
+
+                console.log(JSON.stringify(json));
+                //var t = JSON.stringify(json);
+                var t = jQuery.parseJSON(JSON.stringify(json))
+                var arr = [];
+                for (var i in t) {
+                    arr.push(t[i]);
+                }
+                //alert(arr);
+                 arr.sort();
+                console.log(arr);
+                for (var j in arr) {
+                    var row = $('<tr>')
+                    row.append('<td><div id="box2"><a href=\"activity_detail/' + arr[j] + '\">' + arr[j] + '</a></div></td>');
+                    k=arr[j];
+                    $.post({
+                        url: "/frontpeopletype/"+arr[j]+"/",
+                        data: {},
+                        async: false,
+                        success: function (json) {
+                            //alert(json);
+
+                            console.log(JSON.stringify(json));
+                            //var t = JSON.stringify(json);
+                            var t = jQuery.parseJSON(JSON.stringify(json))
+                            var a = [];
+                            var cnt=[];
+                             for (var i in t) {
+                                cnt.push(t[i]);
+
+                            }
+
+                            for (var i in t) {
+                                a.push(i);
+
+                            }
+                            a.sort();
+
+                            for (var k in a) {
+
+                                if (cnt[k]>={{ c }})
+                                      row.append('<td><div id="people_box" style="background-color:red"><a href=\"people_detail/' + a[k] + '\">' + a[k] + '</td>');
+                                else
+                                        row.append('<td><div id="people_box"><a href=\"people_detail/' + a[k] + '\">' + a[k] + '</td>');
+
+
+
+
+
+
+                            }
+                        }
+                    })
+
+
+                    //$('#table').append('<tr><td><div id="box"><a href=\"activity_detail/' + arr[j] + '\">' + arr[j] + '</a></div></td></tr>');
+
+                    //for(var k in arr) {
+                    //$('#boxs').append('<div id="people_box">people1</div>');
+
+                    $('#table2').append(row);
+
+
+                }
+
+
+            }
+        })
+
+    })
+</script>
+
+
+
+
+</head>
+<body>
+
+
+
+
+<nav class="navbar navbar-inverse " style="margin-top: -20px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/home">GSE DASHBOARD</a>
+    </div>
+    <div class="dropdown" style="margin-top: 9px">
+	<a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">List <span class="caret"></span></a>
+	<ul class="dropdown-menu">
+		<li>
+			<a class="trigger right-caret" id="abc">People</a>
+			<ul class="dropdown-menu sub-menu" id="menu">
+			
+			</ul>
+		</li>
+		<li>
+			<a class="trigger right-caret">Activity</a>
+			<ul  class="dropdown-menu sub-menu">
+				<li>
+					<a class="trigger right-caret" id="nfv1">NFV </a>
+					<ul class="dropdown-menu sub-menu" id="nfv">
+
+					</ul>
+				</li>
+				<li>
+					<a class="trigger right-caret" id="nonnfv1">Non NFV</a>
+					<ul class="dropdown-menu sub-menu" id="nonnfv">
+
+					</ul>
+				</li>
+				<li>
+					<a class="trigger right-caret" id="misc1">MISC</a>
+					<ul class="dropdown-menu sub-menu " id="misc">
+
+					</ul>
+				</li>
+			</ul>
+		</li>
+        </ul>
+</div>
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle">ADD</button>
+  <div class="dropdown-content">
+    <a href="/add_activity">Add activity</a>
+    <a href="/add_people">Add person</a>
+  </div>
+</div>
+      <button class="btn btn-primary dropdown-toggle" style="float: right; margin: 10px 50px 10px 0px" id="popup" onclick="div_show()">SETTINGS</button>
+
+      </div>
+</nav>
+
+
+<div style=" background-color:#eeeeee; color:black;margin-top: -20px;min-height: 350px" >
+    <div style="height: 47px;width: 100%;border-bottom: 1px solid gray;float: left;margin-left: 20px">
+    <h3>NFV</h3>
+    </div>
+    <div  class="nfv_box"><h4>Activity</h4></div>
+    <div class="nfv_box"><h4>People</h4></div>
+
+<table id="table">
+
+
+</table>
+</div>
+
+
+</div>
+
+<br>
+<div style="background-color:#eeeeee; color:black; min-height: 350px">
+
+<div style="height: 47px;width: 100%;border-bottom: 1px solid gray;float: left;margin-left: 20px">
+    <h3>NON-NFV</h3>
+    </div>
+     <div  class="nfv_box"><h4>Activity</h4></div>
+    <div class="nfv_box"><h4>People</h4></div>
+
+<table id="table1">
+
+
+</table>
+</div>
+<br>
+<div  style="background-color:#eeeeee; color:black;min-height: 350px">
+
+<div style="height: 47px;width: 100%;border-bottom: 1px solid gray;float: left;margin-left: 30px">
+    <h3>MISC</h3>
+    </div>
+     <div  class="nfv_box"><h4>Activity</h4></div>
+    <div class="nfv_box"><h4>People</h4></div>
+
+<table id="table2">
+
+
+</table>
+
+
+</div>
+<div id="pop">
+<!-- Popup Div Starts Here -->
+<div id="popupContact">
+<!-- Contact Us Form -->
+    <form  id="form"  method="POST" name="form">{% csrf_token %}
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="close" onclick ="div_hide()">&times;</button>
+<h4>High Load Threshold </h4>
+<hr><br>
+        <label>Project Allocated:</label><br>
+ <select name="Project_Allocated" id="Project_Allocated" class="form-control" required>
+     <option value="1">1</option>
+     <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+     <option value="6">6</option>
+     <option value="7">7</option>
+     <option value="8">8</option>
+     </select>
+        <br><br><br><br>
+
+
+{% endfor %}
+<input type="submit" id="submit" value="Change Settings">
+        </form>
+</div>
+<!-- Popup Div Ends Here -->
+</div>
+</div>
+</body>
+</html>

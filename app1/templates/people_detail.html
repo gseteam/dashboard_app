@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
+
+<style>
+#dropdown{
+  min-width: 160px;
+      min-height: 160px;
+  float:right;
+  margin-right: 550px;
+  margin-top:20px;
+  }
+
+
+</style>
+<script>
+$(document).ready(function() {
+
+    $('#btn-add').click(function(){
+        $('#select-from option:selected').each( function() {
+                 if ($(this).text()!="Remove-Activity"){
+                $('#select-to').append("<option>"+$(this).text()+"</option>");
+                 //alert($(this).text());
+            $(this).remove();}
+        });
+    });
+    $('#btn-remove').click(function(){
+        $('#select-to option:selected').each( function() {
+           if ($(this).text()!="Add-activity"){
+                $('#select-from').append("<option>"+$(this).text()+"</option>");
+                 //alert($(this).text());
+            $(this).remove();}
+        });
+    });
+
+});
+</script>
+
+    <script>
+    $(document).ready(function() {
+
+    $.post({
+        url: "/Remove_Activity_people_detail",
+        data : {},
+        success : function(json) {
+			 //alert(json);
+             //$("#select-from").find('option').remove();
+	  		console.log(JSON.stringify(json));
+           //var t = JSON.stringify(json);
+		   var t= jQuery.parseJSON(JSON.stringify(json))
+			var arr=[];
+			for (var i in t){
+			  arr.push(t[i]);
+			}
+            arr.sort();
+			//alert(arr);
+			console.log(arr);
+			for (var j in arr){
+                $('#select-from').append('<option>'+arr[j]+'</option>');
+           }
+
+		}
+    })
+
+} )
+
+</script>
+     <script>
+    $(document).ready(function() {
+
+    $.post({
+        url: "/Add_Activity_people_detail",
+        data : {},
+        success : function(json) {
+			 //alert(json);
+             //$("#select-to").find('option').remove();
+	  		console.log(JSON.stringify(json));
+           //var t = JSON.stringify(json);
+		   var t= jQuery.parseJSON(JSON.stringify(json))
+			var arr=[];
+			for (var i in t){
+			  arr.push(t[i]);
+			}
+			//alert(arr);
+            arr.sort();
+			console.log(arr);
+			for (var j in arr){
+                $('#select-to').append('<option>'+arr[j]+'</option>');
+           }
+
+		}
+    })
+
+} )
+
+</script>
+
+ <script>
+     $(document).ready(function () {
+         //alert("i m at ready")
+    $('#submit_call').click(function () {
+        //alert("i m at submit call")
+        $('#select-to option').each(function () {
+            //alert($(this).text());
+            $(this).prop("selected",true);
+        });
+                $('#select-from option').each(function () {
+                    //alert($(this).text());
+                    $(this).prop("selected",true);
+        });
+    });
+});
+ </script>
+    <script>
+    $(document).ready(function() {
+        var name=$('#name').val()
+        $('#delete').click('click',function(onclick) {
+
+            $.post({
+        url: "/delete_people_detail/"+name+"/",
+        data : {},
+        success : function() {
+            var result=confirm("Want to delete the user?");
+            if(result){
+               window.location='/home';
+            }
+
+
+
+		}
+    })
+})
+} )
+
+</script>
+
+</head>
+<body  style="background-color:#337ab7">
+
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/home">GSE DASHBOARD</a>
+    </div>
+      </div>
+
+</nav>
+
+<form  method="post">{% csrf_token %}
+  <div style="border: groove; border-color: transparent; margin-left: 100px;margin-right: 100px; margin-top: 50px; background-color:#dcd6ff">
+    <div style="margin-left: 100px;margin-top: 50px;margin-bottom: 100px;">
+        <h2 style="margin-top: -20px; margin-bottom:30px;padding-bottom: 10px; padding-top:10px;border-bottom:groove;text-align:justify">Edit Personal Information</h2>
+<div id="dropdown">
+
+     <select name="selectfrom" id="select-from" multiple>
+         <option selected value="Remove-Activity"  >Remove-Activity</option>
+    </select>
+
+    <a href="JavaScript:void(0);" id="btn-add">Remove &raquo;</a>
+    <a href="JavaScript:void(0);" id="btn-remove">&laquo; Add</a>
+    <select name="selectto" id="select-to" multiple>
+      <option selected value="none">Add-activity</option>
+    </select>
+</div>
+{% for i in People_details %}
+    <label>name:</label><br>
+    <input type="text" name="name" value='{{ i.name }}'  id="name" required>
+    <br><br>
+
+    <label>Vacation Plan:</label>
+    <br>
+          <textarea rows="4" cols="20" name="vacation_plan" required>{{ i.vacation_plan }}
+</textarea>
+<br><br>
+ <label>Visa Status:</label>
+    <br>
+<textarea rows="4" cols="20" name="visa_status" required>{{ i.visa_status }}
+</textarea>
+{% endfor %}
+
+    <br><br>
+    <div style="margin-top: 30px">
+    <input type="submit"  id="submit_call"value="  SAVE  "class="btn btn-info pull-right" style="margin-right: 800px">
+    <input type=button  id="delete"value="DELETE"class="btn btn-info pull-right" style="margin-right: 100px">
+        </div>
+
+  </div>
+
+  </div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
+
+<style>
+.dropdown{
+  min-width: 160px;
+      min-height: 160px;
+  float:right;
+  margin-right: 550px;
+  margin-top:0px;
+  }
+.alert-box { color:#555; border-radius:10px; font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px; padding:10px 10px 10px 36px; margin:10px 750px 10px 0px; }
+            .alert-box span { font-weight:bold; text-transform:uppercase; }
+            .error { background:#ffecec; border:1px solid #f5aca6; }
+
+</style>
+<script>
+    $(document).ready(function() {
+
+    $.post({
+        url: "/getactivity",
+        data : {},
+        success : function(json) {
+			 //alert(json);
+             //$("#len").find('option').remove();
+	  		console.log(JSON.stringify(json));
+           //var t = JSON.stringify(json);
+		   var t= jQuery.parseJSON(JSON.stringify(json))
+			var arr=[];
+			for (var i in t){
+			  arr.push(t[i]);
+			}
+            arr.sort();
+			//alert(arr);
+			console.log(arr);
+			for (var j in arr){
+                $('#len').append('<option>'+arr[j]+'</option>');
+           }
+
+		}
+    })
+
+} )
+
+</script>
+ <script>
+    $(document).ready(function() {
+       $('#msgbx_err').css('display','none');
+      $('#save').click('click', function(){
+          var name=$('#check_name').val()
+
+    $.post({
+
+        url: "/check_availability/"+name+"/",
+        data : {},
+        async: false,
+        success : function(json) {
+            //alert(json);
+            console.log(JSON.stringify(json));
+    ;        //var t = JSON.stringify(json);
+            var t = jQuery.parseJSON(JSON.stringify(json))
+            var arr = [];
+            for (var i in t) {
+                arr.push(t[i]);
+            }
+            //alert(arr);
+            console.log(arr);
+            if (arr[0] == "1") {
+                $('#msgbx_err').css('display', 'block');
+                $('#name_status').html('ERROR:'+name+' is exists in database. please type another username');
+            }
+            else{
+                $('#msgbx_err').css('display','none')
+                $('#name_status').html("");
+            }
+        }
+    })
+
+} )
+	} )
+ </script>
+    <script>
+        function checkfun() {
+            var check=document.getElementById("name_status").innerHTML;
+            if (check){
+                return false;
+
+            }
+
+            else{
+                return true;
+            }
+
+
+        }
+    </script>
+
+</head>
+<body  style="background-color:#337ab7">
+
+<nav class="navbar navbar-inverse ">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/home">GSE DASHBOARD</a>
+    </div>
+      </div>
+
+</nav>
+
+<form  method="post" onsubmit="return checkfun()">{% csrf_token %}
+
+
+
+    <div style="border: groove; border-color: transparent; margin-left: 100px;margin-right: 100px; margin-top: 50px; background-color:#dcd6ff">
+    <div style="margin-left: 100px;margin-top: 50px;margin-bottom: 100px;">
+        <h2 style="margin-top: -20px; margin-bottom:30px;padding-bottom: 10px; padding-top:10px;border-bottom:groove;text-align:justify">Personal information</h2>
+      <div class="dropdown">
+  <label>Add-Activity:</label><br>
+  <select name="type" id="len"  class="form-control">
+  <option>Add Activity</option>
+</select>
+</div>
+    <label>Name:</label><br>
+    <input type="text" name="name" id="check_name" required >
+    <div id="msgbx_err" class="alert-box error"><span id="name_status" ></span></div>
+    <br><br><br>
+
+    <label>Vacation Plan:</label>
+    <br>
+          <textarea rows="4" cols="20" name="vacation_plan" required>None
+</textarea>
+<br><br><br>
+ <label>Visa Status:</label>
+    <br>
+<textarea rows="4" cols="20" name="visa_status" required>None
+</textarea>
+
+    <br><br><br><br>
+    <input type="submit" value="Submit" id="save" class="btn btn-info pull-right" style="margin-right: 800px">
+</div>
+        </div>
+
+
+</form> 
+
+
+</body>
+</html>
