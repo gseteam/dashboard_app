@@ -30,7 +30,7 @@ class Activity_detail_form(forms.Form):
     selectto = forms.CharField(max_length=200)
     selectfrom = forms.CharField(max_length=200)
     customer=forms.CharField(max_length=20)
-    Description=forms.CharField(max_length=200)
+    Description=forms.CharField(max_length=2500)
 
 class settings_form(forms.Form):
     Project_Allocated=forms.CharField(max_length=10)
