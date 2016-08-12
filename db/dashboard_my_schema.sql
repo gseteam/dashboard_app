@@ -46,13 +46,13 @@ CREATE TABLE IF NOT EXISTS `auth_group` (
     `name` varchar(80) NOT NULL UNIQUE
 );
 DROP TABLE IF EXISTS app;
-CREATE TABLE IF NOT EXISTS `app1_settings_model` (`Project_Allocated` varchar(10) NOT NULL, `Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT);
+CREATE TABLE IF NOT EXISTS `app1_settings_model` (`Project_Allocated` varchar(100) NOT NULL, `Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT);
 DROP TABLE IF EXISTS app;
-CREATE TABLE IF NOT EXISTS `app1_people_model` (`Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT, `name` varchar(30) NOT NULL, `vacation_plan` varchar(100) NOT NULL, `visa_status` varchar(100) NOT NULL);
+CREATE TABLE IF NOT EXISTS `app1_people_model` (`Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT, `name` varchar(100) NOT NULL, `vacation_plan` varchar(100) NOT NULL, `visa_status` varchar(100) NOT NULL);
 DROP TABLE IF EXISTS app;
-CREATE TABLE IF NOT EXISTS `app1_detail_model` (`id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT, `Act_name` varchar(20) NOT NULL, `emp_name` varchar(20) NOT NULL);
+CREATE TABLE IF NOT EXISTS `app1_detail_model` (`id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT, `Act_name` varchar(100) NOT NULL, `emp_name` varchar(100) NOT NULL);
 DROP TABLE IF EXISTS app;
-CREATE TABLE IF NOT EXISTS `app1_activity_model` (`Activity_Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT, `Activity_Name` varchar(20) NOT NULL, `Activity_type` varchar(20) NOT NULL, `state` varchar(10) NOT NULL, `Customer_name` varchar(20) NOT NULL, `Description` varchar(200) NOT NULL);
+CREATE TABLE IF NOT EXISTS `app1_activity_model` (`Activity_Id` integer NOT NULL PRIMARY KEY AUTO_INCREMENT, `Activity_Name` varchar(100) NOT NULL, `Activity_type` varchar(100) NOT NULL, `state` varchar(100) NOT NULL, `Customer_name` varchar(100) NOT NULL, `Description` varchar(2500) NOT NULL);
 CREATE INDEX `django_session_b7b81f0c` ON `django_session` (`expire_date`);
 CREATE INDEX `django_admin_log_e8701ad4` ON `django_admin_log` (`user_id`);
 CREATE INDEX `django_admin_log_417f1b1c` ON `django_admin_log` (`content_type_id`);
