@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e
+# Please do not set -e. This may cause all hell to break loose
+#set -e
 
 # Django app shutting down.
 function shut_down() {
