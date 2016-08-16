@@ -1,4 +1,8 @@
-FROM django:latest
+FROM django:1.9.8
+
+# There are some issues in our code with 1.10.
+# Need to fix that.
+#FROM django:latest
 
 COPY app1 /usr/src/app/app1/
 COPY manage.py  /usr/src/app/
