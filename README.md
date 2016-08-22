@@ -43,19 +43,19 @@ Then, start the my-django-app server and provide the following environment varia
   - TCP_ADDR - this can be host or container IP. If you are using bridge networking and give the container IP/PORT, note that both containers need to run on the same host. If you are using host IP/PORT, it doesn't matter if you are using bridge or overlay networking.
   - TCP_PORT - The corresponding host/container port.
 ```sh
-$ docker run -v <Schema file location>:/docker-entrypoint-initdb.d/dashboard_my_schema.sql -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -d mysql:latest
+$ docker run -v <Schema file location>:/docker-entrypoint-initdb.d/dashboard_my_schema.sql -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -d -P mysql:latest
 $ docker run -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -e TCP_ADDR=<host or container IP> -e TCP_PORT=<host or container port> -P -d my-django-app
 ```
 In the above approach, the mysql DB exists only for the duration that the container is alive.
 
 You can also start the mysql container with no existing DB, but map a host directory into the container  so that the DB lives even after the mysql container is stopped/killed.
 ```sh
-$ docker run -v <Schema file location>:/docker-entrypoint-initdb.d/dashboard_my_schema.sql -v /my/data/directory:/var/lib/mysql -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -d mysql:latest
+$ docker run -v <Schema file location>:/docker-entrypoint-initdb.d/dashboard_my_schema.sql -v /my/data/directory:/var/lib/mysql -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -d -P mysql:latest
 $ docker run -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -e TCP_ADDR=<host or container IP> -e TCP_PORT=<host or container port> -P -d my-django-app
 ```
 You can also start the mysql container with an already existing DB. Since we are again mapping a host directory into the container, the updated data will live even after the mysql container is stopped/killed.
 ```sh
-$ docker run -v /my/data/directory:/var/lib/mysql -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -d mysql:latest
+$ docker run -v /my/data/directory:/var/lib/mysql -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -d -P mysql:latest
 $ docker run -e MYSQL_DATABASE=mydashboard -e MYSQL_ROOT_PASSWORD=<password> -e TCP_ADDR=<host or container IP> -e TCP_PORT=<host or container port> -P -d my-django-app
 ```
 
