@@ -1,143 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
-
-<style>
-#dropdown{
-  min-width: 160px;
-      min-height: 160px;
-  float:right;
-  margin-right: 550px;
-  margin-top:20px;
-  }
-
-
-</style>
-<script>
-$(document).ready(function() {
-
-    $('#btn-add').click(function(){
-        $('#select-from option:selected').each( function() {
-                 if ($(this).text()!="Remove-Activity"){
-                $('#select-to').append("<option>"+$(this).text()+"</option>");
-                 //alert($(this).text());
-            $(this).remove();}
-        });
-    });
-    $('#btn-remove').click(function(){
-        $('#select-to option:selected').each( function() {
-           if ($(this).text()!="Add-activity"){
-                $('#select-from').append("<option>"+$(this).text()+"</option>");
-                 //alert($(this).text());
-            $(this).remove();}
-        });
-    });
-
-});
-</script>
-
-    <script>
-    $(document).ready(function() {
-
-    $.post({
-        url: "/Remove_Activity_people_detail",
-        data : {},
-        success : function(json) {
-			 //alert(json);
-             //$("#select-from").find('option').remove();
-	  		console.log(JSON.stringify(json));
-           //var t = JSON.stringify(json);
-		   var t= jQuery.parseJSON(JSON.stringify(json))
-			var arr=[];
-			for (var i in t){
-			  arr.push(t[i]);
-			}
-            arr.sort();
-			//alert(arr);
-			console.log(arr);
-			for (var j in arr){
-                $('#select-from').append('<option>'+arr[j]+'</option>');
-           }
-
-		}
-    })
-
-} )
-
-</script>
-     <script>
-    $(document).ready(function() {
-
-    $.post({
-        url: "/Add_Activity_people_detail",
-        data : {},
-        success : function(json) {
-			 //alert(json);
-             //$("#select-to").find('option').remove();
-	  		console.log(JSON.stringify(json));
-           //var t = JSON.stringify(json);
-		   var t= jQuery.parseJSON(JSON.stringify(json))
-			var arr=[];
-			for (var i in t){
-			  arr.push(t[i]);
-			}
-			//alert(arr);
-            arr.sort();
-			console.log(arr);
-			for (var j in arr){
-                $('#select-to').append('<option>'+arr[j]+'</option>');
-           }
-
-		}
-    })
-
-} )
-
-</script>
-
- <script>
-     $(document).ready(function () {
-         //alert("i m at ready")
-    $('#submit_call').click(function () {
-        //alert("i m at submit call")
-        $('#select-to option').each(function () {
-            //alert($(this).text());
-            $(this).prop("selected",true);
-        });
-                $('#select-from option').each(function () {
-                    //alert($(this).text());
-                    $(this).prop("selected",true);
-        });
-    });
-});
- </script>
-    <script>
-    $(document).ready(function() {
-        var name=$('#name').val()
-        $('#delete').click('click',function(onclick) {
-
-            $.post({
-        url: "/delete_people_detail/"+name+"/",
-        data : {},
-        success : function() {
-            var result=confirm("Want to delete the user?");
-            if(result){
-               window.location='/home';
-            }
-
-
-
-		}
-    })
-})
-} )
-
-</script>
-
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/peopleDropdown.css" %}">
+    <script src="{% static "js/addRemoveButton.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/peopleDetails.js" %}" type="text/javascript"></script>
 </head>
 <body  style="background-color:#337ab7">
 

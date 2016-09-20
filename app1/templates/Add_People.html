@@ -18,100 +18,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
+    {% load static %}
+     <link rel="stylesheet" href="{% static "css/alertBox.css" %}">
+     <link rel="stylesheet" href="{% static "css/addPeople.css" %}">
+    <script src="{% static "js/addPeople.js" %}" type="text/javascript"></script>
 
-<style>
-.dropdown{
-  min-width: 160px;
-      min-height: 160px;
-  float:right;
-  margin-right: 550px;
-  margin-top:0px;
-  }
-.alert-box { color:#555; border-radius:10px; font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px; padding:10px 10px 10px 36px; margin:10px 750px 10px 0px; }
-            .alert-box span { font-weight:bold; text-transform:uppercase; }
-            .error { background:#ffecec; border:1px solid #f5aca6; }
-
-</style>
-<script>
-    $(document).ready(function() {
-
-    $.post({
-        url: "/getactivity",
-        data : {},
-        success : function(json) {
-			 //alert(json);
-             //$("#len").find('option').remove();
-	  		console.log(JSON.stringify(json));
-           //var t = JSON.stringify(json);
-		   var t= jQuery.parseJSON(JSON.stringify(json))
-			var arr=[];
-			for (var i in t){
-			  arr.push(t[i]);
-			}
-            arr.sort();
-			//alert(arr);
-			console.log(arr);
-			for (var j in arr){
-                $('#len').append('<option>'+arr[j]+'</option>');
-           }
-
-		}
-    })
-
-} )
-
-</script>
- <script>
-    $(document).ready(function() {
-       $('#msgbx_err').css('display','none');
-      $('#save').click('click', function(){
-          var name=$('#check_name').val()
-
-    $.post({
-
-        url: "/check_availability/"+name+"/",
-        data : {},
-        async: false,
-        success : function(json) {
-            //alert(json);
-            console.log(JSON.stringify(json));
-    ;        //var t = JSON.stringify(json);
-            var t = jQuery.parseJSON(JSON.stringify(json))
-            var arr = [];
-            for (var i in t) {
-                arr.push(t[i]);
-            }
-            //alert(arr);
-            console.log(arr);
-            if (arr[0] == "1") {
-                $('#msgbx_err').css('display', 'block');
-                $('#name_status').html('ERROR:'+name+' is exists in database. please type another username');
-            }
-            else{
-                $('#msgbx_err').css('display','none')
-                $('#name_status').html("");
-            }
-        }
-    })
-
-} )
-	} )
- </script>
-    <script>
-        function checkfun() {
-            var check=document.getElementById("name_status").innerHTML;
-            if (check){
-                return false;
-
-            }
-
-            else{
-                return true;
-            }
-
-
-        }
-    </script>
 
 </head>
 <body  style="background-color:#337ab7">

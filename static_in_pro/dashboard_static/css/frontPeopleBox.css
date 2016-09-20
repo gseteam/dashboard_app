@@ -1,0 +1,21 @@
+   #people_box a{
+        text-decoration: none;
+        color: white;
+    }
+    #people_box:hover{
+        background-color: green;
+    }
+ #people_box{
+
+    text-color: white;
+    width: 150px;
+        height:50px;
+   background-color:#3e8e41;
+      padding: 11px 12px;
+       font-size: 14px;
+    text-align: center;
+
+    border: 1px solid transparent;
+        border-radius: 4px;
+
+}

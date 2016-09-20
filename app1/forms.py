@@ -14,7 +14,7 @@ class Activity_form(forms.Form):
     type=forms.CharField(max_length=10)
     Add_people=forms.CharField(max_length=20)
     customer=forms.CharField(max_length=20)
-    Description=forms.CharField(max_length=200)
+    Description=forms.CharField(max_length=2500)
 
 class people_detail_form(forms.Form):
     name = forms.CharField(max_length=200)

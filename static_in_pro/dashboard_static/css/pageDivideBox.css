@@ -1,0 +1,19 @@
+.nfv_box{
+    width: 150px;
+    height: 30px;
+    text-align:center;
+    border-bottom: solid gray 1px;
+    display:inline-block;
+    margin-top: 10px;
+    margin-right: 400px;
+    margin-left: 20px;
+}
+    table {
+    border-collapse: collapse;
+
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}

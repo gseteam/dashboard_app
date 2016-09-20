@@ -5,11 +5,16 @@ from django.template.context_processors import request
 from django.db.models import Count
 from django.views.decorators.csrf import csrf_exempt
 import json
+from collections import OrderedDict
 
 from django.template import RequestContext, loader
 from .forms import people_form, Activity_form,people_detail_form,Activity_detail_form,settings_form
 from .models import People_model, Activity_model,detail_model,settings_model
 from django.db.models import Q
+def welcome(request):
+    return render(request,"welcome.html")
+
+
 def xyz(request):
     ##print("i m in settings")
     f = settings_form
@@ -86,7 +91,7 @@ def check_availability(request,name):
 @csrf_exempt
 def activity_check_availability(request,name,type):
     n=name.strip()
-    model=Activity_model.objects.filter(Activity_Name=n,Activity_type=type)
+    model=Activity_model.objects.filter(Activity_Name=n)
     if model:
         ##print("if i m there")
         return HttpResponse(json.dumps({"available":"1"}),
@@ -147,6 +152,24 @@ def Get_activity(request):
                         content_type="application/json")
 
 @csrf_exempt
+def resources(request):
+    A = Activity_model.objects.filter(Q(state='0')|Q( Activity_type='MISC'))
+    A_data = {"A-type": A}
+    m=[str(j.Activity_Name) for j in A_data["A-type"]]
+    print("m===",m);
+    l = detail_model.objects.filter().exclude(Act_name__in=m)
+    ##print("test==", l)
+    l_data = {"l-type": l}
+    ##print("l_data", l_data["l-type"])
+    name= set([str(j.emp_name) for j in l_data["l-type"]])
+    print ("name=======",name)
+    free_resources_name=People_model.objects.filter().exclude(name__in=name)
+    print ("free_resources_name===",free_resources_name)
+    free_resources_name_data = {"free_resources_name-type": free_resources_name}
+    # cnt=[str(j.emp_name):str(j.acnt) for j in l_data["l-type"]]
+    return HttpResponse(json.dumps({i.Id: str(i.name) for i in free_resources_name_data["free_resources_name-type"]}),
+                        content_type="application/json")
+@csrf_exempt
 def Get_activity_type(request):
     Activity_type_info = Activity_model.objects.filter(Activity_type='NFV')
     Activity_type_data = {"Activity_type_details": Activity_type_info}
@@ -182,7 +205,7 @@ def front_people_type(request,Act_name):
     # cnt=[str(j.emp_name):str(j.acnt) for j in l_data["l-type"]]
 
     for j in l_data["l-type"]:
-        print(j["acnt"], j["emp_name"])
+       ## print(j["acnt"], j["emp_name"])
 
         name[str(j["emp_name"])] = str(j["acnt"])
     ##print ("name=====",name)
@@ -194,11 +217,11 @@ def front_people_type(request,Act_name):
                 dict[j]=k;
                 flag=1
         if flag==0:
-           dict[j]='0'
+           dict[j]='0';
     ##print ("dict=",dict)
 
 
-    return HttpResponse(json.dumps(dict),
+    return HttpResponse(json.dumps(OrderedDict(sorted(dict.items(), key=lambda t: t[0]))),
                         content_type="application/json")
 
 
