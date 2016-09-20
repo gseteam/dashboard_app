@@ -7,6 +7,7 @@ FROM django:1.9.8
 COPY app1 /usr/src/app/app1/
 COPY manage.py  /usr/src/app/
 COPY test_pro /usr/src/app/test_pro/
+COPY static_in_pro /usr/src/app/static_in_pro/
 
 # Folder where db files are created when using SQLite.
 # We need to mount this to a host dir to keep it persistent.
